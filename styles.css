@@ -1,0 +1,170 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.login-container {
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+}
+
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-bottom: 2px solid #ccc;
+}
+
+.saudacao {
+    text-align: left;
+}
+
+.logout {
+    text-align: right;
+}
+
+.logout button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logout button:hover {
+    background-color: #c9302c;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    background-color: #333;
+}
+
+.menu li {
+    position: relative;
+}
+
+.menu li a {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    background-color: #333;
+}
+
+.menu li:hover > a {
+    background-color: #555;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 200px;
+}
+
+.dropdown-menu li a {
+    padding: 10px;
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+#sugestoes {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    position: absolute;
+    width: 200px;
+}
+
+#sugestoes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#sugestoes li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+#sugestoes li:hover {
+    background-color: #ddd;
+}
+
+/* Centraliza o formulário na tela */
+form {
+    width: 500px; /* Define uma largura fixa */
+    margin: 50px auto; /* Centraliza na tela */
+    padding: 20px;
+    background-color: #f9f9f9; /* Fundo suave */
+    border-radius: 10px; /* Cantos arredondados */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os elementos dentro do formulário */
+}
+
+
+/* Ajusta as labels */
+label {
+    display: block; /* Mantém acima do campo */
+    font-weight: bold;
+    margin-bottom: 5px; /* Espaço entre label e campo */
+}
+
+/* Ajusta os campos de entrada */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 80%; /* Ocupa toda a largura do formulário */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Ajusta os botões */
+button {
+    width: 80%;
+    padding: 10px;
+    background-color: #007bff; /* Azul bonito */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}
