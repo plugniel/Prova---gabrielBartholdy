@@ -1,69 +1,69 @@
 <?php
-// Configurações para a conexão com o banco de dados
 
-// $host: Define o endereço do servidor onde o banco de dados está hospedado.
-// 'localhost' significa que o banco de dados está rodando na mesma máquina
-// que o servidor web (onde o PHP está sendo executado).
-$host = 'localhost';
+// Define uma função chamada 'gerarSenhaTemporaria'.
+// Funções são blocos de código que realizam uma tarefa específica e podem ser chamadas (usadas) várias vezes.
+// Esta função tem um parâmetro opcional chamado '$tamanho', que por padrão é 8.
+// Isso significa que se você chamar a função sem especificar o tamanho, ela gerará uma senha de 8 caracteres.
+function gerarSenhaTemporaria($tamanho = 8) {
+    // 1. "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    //    Esta é uma string contendo todos os caracteres que podem ser usados na senha temporária:
+    //    - Letras minúsculas (a-z)
+    //    - Letras maiúsculas (A-Z)
+    //    - Números (0-9)
 
-// $dbname: Define o nome do banco de dados ao qual queremos nos conectar.
-// Neste caso, o banco de dados se chama 'senai_login'.
-$dbname = 'senai_login';
+    // 2. str_shuffle("...")
+    //    A função str_shuffle() pega a string fornecida e embaralha seus caracteres aleatoriamente.
+    //    Então, "abc" pode virar "bca", "cab", etc.
 
-// $user: Define o nome de usuário para acessar o banco de dados.
-// 'root' é um usuário comum em ambientes de desenvolvimento MySQL,
-// geralmente com permissões totais (mas não recomendado para produção sem senha!).
-$user = 'root';
+    // 3. substr(str_shuffle(...), 0, $tamanho)
+    //    A função substr() é usada para pegar uma parte (uma "substring") de uma string.
+    //    - O primeiro argumento é a string original (neste caso, a string de caracteres embaralhada).
+    //    - O segundo argumento (0) é a posição inicial de onde começar a pegar os caracteres (0 é o primeiro caractere).
+    //    - O terceiro argumento ($tamanho) é quantos caracteres pegar.
 
-// $pass: Define a senha para o usuário do banco de dados.
-// '' (uma string vazia) significa que não há senha configurada para o usuário 'root'.
-// Isso é comum em configurações locais de desenvolvimento, mas **altamente inseguro** para servidores de produção.
-$pass = '';
-
-// O bloco try...catch é usado para tratamento de erros.
-// Se algo der errado ao tentar conectar ao banco de dados (dentro do 'try'),
-// o código dentro do 'catch' será executado para lidar com o erro de forma controlada.
-try {
-    // Tenta criar uma nova conexão com o banco de dados usando PDO.
-    // PDO é uma extensão do PHP que fornece uma interface consistente para acessar
-    // diferentes tipos de bancos de dados (MySQL, PostgreSQL, SQLite, etc.).
-
-    // "mysql:host=$host;dbname=$dbname" é o DSN (Data Source Name).
-    // Ele especifica:
-    //   - 'mysql': o tipo de driver do banco de dados (neste caso, MySQL).
-    //   - "host=$host": o servidor do banco de dados (o valor da variável $host, ou seja, 'localhost').
-    //   - "dbname=$dbname": o nome do banco de dados (o valor da variável $dbname, ou seja, 'senai_login').
-    // As variáveis $user e $pass são o nome de usuário e a senha para autenticação.
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-
-    // Configura o PDO para lançar exceções em caso de erros.
-    // PDO::ATTR_ERRMODE: Define o modo de relatório de erros.
-    // PDO::ERRMODE_EXCEPTION: Se ocorrer um erro na comunicação com o banco (ex: consulta SQL errada),
-    // o PDO lançará uma exceção (um tipo especial de erro que pode ser "capturado" pelo bloco catch).
-    // Isso é bom para depuração e para tratar erros de forma mais robusta.
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Se a conexão for bem-sucedida, a variável $pdo agora contém um objeto
-    // que representa a conexão com o banco de dados. Este objeto $pdo
-    // será usado em outros scripts (como o login.php) para executar consultas SQL.
-
-} catch (PDOException $e) {
-    // Se ocorrer qualquer erro (uma PDOException) durante a tentativa de conexão no bloco 'try',
-    // o código dentro deste bloco 'catch' será executado.
-
-    // $e é um objeto que contém informações sobre o erro que ocorreu.
-    // $e->getMessage() retorna uma mensagem descrevendo o erro.
-
-    // die() interrompe a execução do script e exibe uma mensagem.
-    // É uma forma simples de lidar com um erro crítico de conexão.
-    // Em um ambiente de produção, você poderia querer registrar o erro em um arquivo de log
-    // ou mostrar uma mensagem mais amigável para o usuário, sem expor detalhes técnicos.
-    die("Erro de conexão com o banco de dados: " . $e->getMessage());
+    // Em resumo: a função embaralha uma lista de letras e números e depois pega os primeiros '$tamanho'
+    // caracteres dessa mistura para formar a senha.
+    return substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, $tamanho);
 }
 
-// Se o script chegar até aqui sem entrar no 'catch', significa que a conexão
-// foi estabelecida com sucesso e o objeto $pdo está pronto para ser usado.
-// Se este arquivo for incluído (usando 'require' ou 'include') em outros scripts PHP,
-// a variável $pdo estará disponível para eles.
-?>
 
+// Define uma função chamada 'simularEnvioEmail'.
+// Esta função recebe dois parâmetros obrigatórios:
+// - $destinatario: O endereço de e-mail para quem o e-mail (simulado) seria enviado.
+// - $senha: A senha (provavelmente a temporária gerada pela função acima) que será incluída no corpo do e-mail.
+function simularEnvioEmail($destinatario, $senha) {
+    // Cria a mensagem que seria o corpo do e-mail.
+    // A variável $senha é inserida diretamente na string.
+    // "\n" representa uma quebra de linha.
+    $mensagem = "Olá! Sua nova senha temporária é: $senha\n";
+
+    // Cria uma string de registro que simula o cabeçalho e o corpo do e-mail.
+    // Isso é útil para testes, para ver qual e-mail seria enviado sem realmente enviá-lo.
+    $registro = "Para: $destinatario\n$mensagem\n----------------------\n";
+
+    // file_put_contents("emails_simulados.txt", $registro, FILE_APPEND);
+    // Esta função escreve dados em um arquivo.
+    // - "emails_simulados.txt": É o nome do arquivo onde as informações do e-mail simulado serão salvas.
+    //   Se o arquivo não existir, ele será criado.
+    // - $registro: São os dados que serão escritos no arquivo (as informações do e-mail que montamos acima).
+    // - FILE_APPEND: Esta é uma constante importante! Ela diz para a função adicionar ($registro)
+    //   ao final do arquivo, em vez de apagar o conteúdo anterior e escrever por cima.
+    //   Assim, cada "e-mail simulado" é adicionado como um novo registro no arquivo.
+
+    // Esta função NÃO ENVIA um e-mail de verdade. Ela apenas simula o processo
+    // salvando as informações do e-mail em um arquivo de texto local.
+    // Isso é muito útil durante o desenvolvimento e teste para não disparar e-mails reais
+    // a cada teste e para poder verificar facilmente o conteúdo que seria enviado.
+    file_put_contents("emails_simulados.txt", $registro, FILE_APPEND);
+}
+
+// Exemplo de como usar as funções (não faz parte da definição das funções, mas para ilustrar):
+/*
+$emailUsuario = "exemplo@email.com";
+$novaSenha = gerarSenhaTemporaria(10); // Gera uma senha de 10 caracteres
+simularEnvioEmail($emailUsuario, $novaSenha);
+
+echo "Senha temporária '$novaSenha' gerada para $emailUsuario e registrada em emails_simulados.txt";
+*/
+
+?>
