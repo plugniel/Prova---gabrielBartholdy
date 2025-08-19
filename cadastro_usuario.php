@@ -20,6 +20,26 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     $stmt->bindParam(':senha', $senha);
     $stmt->bindParam(':id_perfil', $id_perfil);
     if ($stmt->execute()) {
+        echo "<script>alert('Usuario cadastrado com sucesso!');</script>";
+    } else {
+        echo "<script>alert('Erro ao cadastrar o usuario');</script>";
+    }
    
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2>Cadastrar Usuario</h2>
+    <form action="cadastro_usuario.php">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" required>
+    </form>
+</body>
+</html>
