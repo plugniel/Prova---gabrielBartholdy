@@ -39,8 +39,8 @@ $permissoes = [
 [
     "Cadastrar"=>["cadastro_fornecedor.php","cadastro_produto.php"],
     "Buscar"=>["buscar_cliente.php","buscar_fornecedor.php","buscar_produto.php"],
-    "Alterar"=>["alterar_fornecedor.php","alterar_produto.php"]],
-    "Excluir"=>["excluir_produto.php"],
+    "Alterar"=>["alterar_fornecedor.php","alterar_produto.php"],
+    "Excluir"=>["excluir_produto.php"]],
 
     4=>
 [
@@ -66,32 +66,35 @@ $opcoes_menu = $permissoes[$id_perfil];
 </head>
     <body>
         <header>
-            
+
             <div class="saudacao">
                 <h2>Bem-Vindo, <?php echo $_SESSION["usuario"];?>! Permissão: <?php echo $nome_perfil;?></h2>
             </div>
 
             <div class="logout">
                 <form action="logout.php" method="POST">
-                    <button type="submit">Logout</button>
+                    <button type="submit">Sair</button>
                 </form>
             </div>
+
         </header>
+
         <nav>
-            <ul class = "menu">
+            <ul class="menu">
                 <?php foreach($opcoes_menu as $categoria=>$arquivos): ?>
-                <li class = "dropdown">
-                    <a href="#"><?=$categoria?></a>
-                    <ul class = "dropdown-menu">
-                    <?php foreach($arquivos as $arquivo): ?>
+                <li class="dropdown">
+                    <a href="#"><?= $categoria ?></a>
+                    <ul class="dropdown-menu">
+                        <?php foreach($arquivos as $arquivo): ?>
                         <li>
-                            <a href="#<?$arquivo?>"><?=ucfirst(str_replace("_"," ",basename($arquivo,".php")))?></a>
+                            <a href="<?= $arquivo ?>"><?= ucfirst(str_replace("_"," ",basename($arquivo,".php")))?></a>
                         </li>
-                    <?php endforeach; ?>
+                            <?php endforeach; ?>
                     </ul>
                 </li>
                 <?php endforeach; ?>
             </ul>
         </nav>
+
     </body>
 </html>
