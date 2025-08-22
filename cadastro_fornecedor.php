@@ -81,6 +81,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js"></script>
+    <script src="validacoes.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
@@ -111,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         <input type="text" id="endereco" name="endereco" required>
         
         <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" name="telefone" required>
+        <input type="text" id="telefone" name="telefone" required onkeyup="validarTelefone()" >
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>

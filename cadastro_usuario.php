@@ -79,10 +79,12 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
-    
+    <script src="scripts.js"></script>
+    <script src="validacoes.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <nav>
             <ul class="menu">
@@ -103,10 +105,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     <center><h2>Cadastro de Usuário</h2></center>
     <form method="POST" action="cadastro_usuario.php">
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
+        <input type="text" id="nome" name="nome" required onkeyup="validarNome()" minlength="3" maxlength="50">
         
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" required onkeyup="validarEmail()">
         
         <label for="senha">Senha:</label>
         <input type="password" id="senha" name="senha" required>

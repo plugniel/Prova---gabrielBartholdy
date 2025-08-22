@@ -3,6 +3,7 @@ function validarFuncionario() {
     let telefone = document.getElementById("telefone").value;
     let email = document.getElementById("email").value;
 
+
     if (nome.length < 3) {
         alert("O nome do funcionário deve ter pelo menos 3 caracteres.");
         return false;
@@ -22,22 +23,33 @@ function validarFuncionario() {
 
     return true;
 }
-function Validarusuario() {
-    let nome = document.getElementById("nome_usuario").value;
-    let senha = document.getElementById("senha").value;
+
+function validarNome(){
+    let nome = document.getElementById("nome").value;
+
+    nome = nome.replace(/[0-9]/g, "");
+    document.getElementById("nome").value = nome;
+
+    return true;
+}
+
+function validarTelefone(){
+    let variavel = document.getElementById("telefone").value;
+    variavel = variavel.replace(/\D/g, "");
+    variavel = variavel.replace(/^(\d\d)(\d)/g, "($1) $2"); // adiciona parenteses em volta dos dois primeiros dígitos
+    variavel = variavel.replace(/(\d{5})(\d)/, "$1-$2"); // adiciona o hífen entre o quarto e o quinto dígito
+    document.getElementById("telefone").value = variavel;
+    if (variavel.length > 15) {
+        alert("O telefone deve ter no máximo 15 caracteres.");
+        return false;
+    }
+    return variavel;
+}
+
+function validarEmail() {
     let email = document.getElementById("email").value;
-
-    if (nome.length < 3) {
-        alert("O nome do usuário deve ter pelo menos 3 caracteres.");
-        return false;
-    }
-
-    if (senha.length < 6) {
-        alert("A senha deve ter pelo menos 6 caracteres.");
-        return false;
-    }
-
     let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!regexEmail.test(email)) {
         alert("Digite um e-mail válido.");
         return false;
