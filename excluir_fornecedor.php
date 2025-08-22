@@ -2,9 +2,10 @@
 session_start();
 require_once 'conexao.php';
 
-// verifica se o usuario tem permissao 
-if($_SESSION['perfil']!= 1) {
-    echo "Acesso negado. ";
+
+// Verifica se o usuário tem permissão de adm 
+if ($_SESSION['perfil']!= 1) {
+    echo"<script>alert('Acesso negado.');window.location.href='principal.php';</script>";
     exit();
 }
 
@@ -51,40 +52,44 @@ $permissoes = [
 // OBTENDO AS OPÇÕS DISPONIVEIS PARA O PERFIL LOGADO
 
 $opcoes_menu = $permissoes[$id_perfil];
+// Inicializa as variaveis 
+$usuario = null;
 
-if ($_SERVER["REQUEST_METHOD"]=="POST") {
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-    $id_perfil = $_POST['id_perfil'];
-    $sql = "INSERT INTO usuario (nome, email, senha, id_perfil) VALUES (:nome, :email, :senha, :id_perfil)";
+// Busca todos os usuários cadastrados em ordem alfabética
+$sql = "SELECT * FROM usuario ORDER BY nome ASC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$usuarios = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+// Se um id for passado via GET, excluir o usuário 
+if (isset($_GET['id']) && is_numeric($_GET['id'])){
+    $id_usuario = $_GET['id'];
+    
+    // excluir o usuario do banco de dados 
+    $sql = "DELETE FROM fornecedor WHERE id_fornecedor = :id";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':nome', $nome);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':senha', $senha);
-    $stmt->bindParam(':id_perfil', $id_perfil);
+    $stmt->bindParam(':id', $id_usuario, PDO::PARAM_INT);
 
-    if($stmt->execute()) {
-        echo "<script>alert('Usuário cadastrado com sucesso!');</script>";
-    }else{
-        echo "<script>alert('Erro ao cadastrar usuário.');</script>";
+    if ($stmt->execute()){
+        echo "<script>alert('Usuário excluído com sucesso!');window.location.href='excluir_usuario.php';</script>";
+    } else {
+        echo "<script>alert('Erro ao excluir usuário.');</script>";
     }
-};
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Excluir usuário</title>
     <link rel="stylesheet" href="styles.css">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  </head>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <nav>
+    <nav>
             <ul class="menu">
                 <?php foreach($opcoes_menu as $categoria=>$arquivos): ?>
                 <li class="dropdown">
@@ -100,29 +105,33 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
                 <?php endforeach; ?>
             </ul>
         </nav>
-    <center><h2>Cadastro de Usuário</h2></center>
-    <form method="POST" action="cadastro_usuario.php">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
+    <center><h2> Excluir Usuário</h2></center>
+    <?php if(!empty($usuarios)):?>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <table border = "1" class ="table table-striped">
+            <tr> 
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Perfil</th>
+                <th>Ações</th>
+            </tr>
         
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required>
-        
-        <label for="id_perfil">Perfil:</label>
-        <select id="id_perfil" name="id_perfil">
-            <option value="1">Administrador</option>
-            <option value="2">Usuário</option>
-            <option value="3">Almoxarife</option>
-            <option value="4">Cliente</option>
-        </select>
-        
-        <button type="submit"class = "btn btn-primary">Cadastrar</button>
-        <br>
-        <button type="reset"class = "btn btn-primary">Cancelar</button>
-    </form>
-    <center><a href="principal.php"class = "btn btn-primary">Voltar</a></center>
+            <?php foreach ($usuarios as $usuario): ?>
+                <tr>
+                    <td> <?= htmlspecialchars($usuario['id_usuario']) ?> </td>
+                    <td> <?= htmlspecialchars($usuario['nome']) ?> </td>
+                    <td> <?= htmlspecialchars($usuario['email']) ?> </td>
+                    <td> <?= htmlspecialchars($usuario['id_perfil']) ?> </td>
+                    <td>
+                        <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>"onclick= "return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>     
+        </table>
+            <?php else: ?>
+            <p> Nenhum usuário encontrado.</p>
+    <?php endif; ?>
+    <center><a href="principal.php" class = "btn btn-primary">Voltar</a></center>    
 </body>
 </html>
