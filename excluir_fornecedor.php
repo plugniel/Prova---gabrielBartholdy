@@ -53,27 +53,27 @@ $permissoes = [
 
 $opcoes_menu = $permissoes[$id_perfil];
 // Inicializa as variaveis 
-$usuario = null;
+$fornecedor = null;
 
 // Busca todos os usuários cadastrados em ordem alfabética
-$sql = "SELECT * FROM usuario ORDER BY nome ASC";
-$stmt = $pdo->prepare($sql);
+$sql = "SELECT * FROM fornecedor";
+$stmt = $pdo->prepare($sql); 
 $stmt->execute();
-$usuarios = $stmt->fetchALL(PDO::FETCH_ASSOC);
+$fornecedores = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
 // Se um id for passado via GET, excluir o usuário 
 if (isset($_GET['id']) && is_numeric($_GET['id'])){
-    $id_usuario = $_GET['id'];
+    $id_fornecedor = $_GET['id'];
     
     // excluir o usuario do banco de dados 
     $sql = "DELETE FROM fornecedor WHERE id_fornecedor = :id";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':id', $id_usuario, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $id_fornecedor, PDO::PARAM_INT);
 
     if ($stmt->execute()){
-        echo "<script>alert('Usuário excluído com sucesso!');window.location.href='excluir_usuario.php';</script>";
+        echo "<script>alert('Fornecedor excluído com sucesso!');window.location.href='excluir_fornecedor.php';</script>";
     } else {
-        echo "<script>alert('Erro ao excluir usuário.');</script>";
+        echo "<script>alert('Erro ao excluir ao excluir Fornecedor.');</script>";
     }
 }
 ?>
@@ -83,7 +83,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excluir usuário</title>
+    <title>Excluir Fornecedor</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   </head>
@@ -105,32 +105,32 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])){
                 <?php endforeach; ?>
             </ul>
         </nav>
-    <center><h2> Excluir Usuário</h2></center>
-    <?php if(!empty($usuarios)):?>
+    <center><h2> Excluir Fornecedor</h2></center>
+    <?php if(!empty($fornecedores)):?>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <table border = "1" class ="table table-striped">
             <tr> 
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Perfil</th>
+                <th>contatos</th>
                 <th>Ações</th>
             </tr>
         
-            <?php foreach ($usuarios as $usuario): ?>
+            <?php foreach ($fornecedores as $fornecedor): ?>
                 <tr>
-                    <td> <?= htmlspecialchars($usuario['id_usuario']) ?> </td>
-                    <td> <?= htmlspecialchars($usuario['nome']) ?> </td>
-                    <td> <?= htmlspecialchars($usuario['email']) ?> </td>
-                    <td> <?= htmlspecialchars($usuario['id_perfil']) ?> </td>
+                    <td> <?= htmlspecialchars($fornecedor['id_fornecedor']) ?> </td>
+                    <td> <?= htmlspecialchars($fornecedor['nome_fornecedor']) ?> </td>
+                    <td> <?= htmlspecialchars($fornecedor['email']) ?> </td>
+                    <td> <?= htmlspecialchars($fornecedor['contato']) ?> </td>
                     <td>
-                        <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>"onclick= "return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
+                        <a class = "btn btn-danger" href="excluir_fornecedor.php?id=<?= htmlspecialchars($fornecedor['id_fornecedor']) ?>"onclick= "return confirm('Tem certeza que deseja excluir este Fornecedor?')">Excluir</a>
                     </td>
                 </tr>
             <?php endforeach; ?>     
         </table>
             <?php else: ?>
-            <p> Nenhum usuário encontrado.</p>
+            <p> Nenhum Fornecedor encontrado.</p>
     <?php endif; ?>
     <center><a href="principal.php" class = "btn btn-primary">Voltar</a></center>    
 </body>

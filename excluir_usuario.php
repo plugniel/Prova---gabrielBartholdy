@@ -124,11 +124,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])){
                     <td> <?= htmlspecialchars($usuario['email']) ?> </td>
                     <td> <?= htmlspecialchars($usuario['id_perfil']) ?> </td>
                     <td>
-                        <a href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>"onclick= "return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
+                        <a class = "btn btn-danger" href="excluir_usuario.php?id=<?= htmlspecialchars($usuario['id_usuario']) ?>"onclick= "return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
                     </td>
                 </tr>
             <?php endforeach; ?>     
-        </table>
+        </table> 
             <?php else: ?>
             <p> Nenhum usuário encontrado.</p>
     <?php endif; ?>
