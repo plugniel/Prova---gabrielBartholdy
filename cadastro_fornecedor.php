@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
         <button type="submit"class = "btn btn-primary">Cadastrar</button>
         <br>
-        <button type="reset"class = "btn btn-primary">Cancelar</button>
+        <button type="reset"class = "btn btn-danger">Cancelar</button>
     </form>
     <center><a href="principal.php"class = "btn btn-primary">Voltar</a></center>
 </body>
