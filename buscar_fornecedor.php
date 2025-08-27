@@ -9,13 +9,13 @@ if ($_SESSION['perfil'] != 1 && $_SESSION['perfil'] !=2) {
 }
 // INICIALIZA A VARIAVEL PARA EVITAR ERROS
 
-$fornecedores = [];
+$usuarios = [];
 
 // SE O FORMULARIO FOR ENVIADO, BUSCA O USUARIO PELO ID OU NOME
 
 if ($_SERVER["REQUEST_METHOD"]=="POST" && !empty($_POST['busca'])){
  $busca = trim($_POST['busca']);
- 
+
  // VERIFICA SE A BUSCA É UM NUMERO (ID) OU UM NOME
 
  if(is_numeric($busca)){
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" && !empty($_POST['busca'])){
     $stmt =$pdo->prepare($sql);
     $stmt->bindParam(':busca', $busca, PDO::PARAM_INT);
  } else {
-    $sql = "SELECT * FROM fornecedor WHERE nome_fornecedor LIKE :busca_fornecedor ORDER BY nome_fornecedor ASC";
+    $sql = "SELECT * FROM fornecedor WHERE nome_fornecedor LIKE :busca_nome ORDER BY nome_fornecedor ASC";
     $stmt =$pdo->prepare($sql);
     $stmt->bindValue(':busca_nome', "$busca%", PDO::PARAM_STR);
  }
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" && !empty($_POST['busca'])){
     $stmt =$pdo->prepare($sql);
 }
 $stmt->execute();
-$fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $id_perfil = $_SESSION['perfil'];
 $sqlPerfil = "SELECT nome_perfil FROM perfil WHERE id_perfil = :id_perfil";
@@ -43,7 +43,7 @@ $perfil = $stmtPerfil->fetch(PDO::FETCH_ASSOC);
 $nome_perfil = $perfil['nome_perfil'];
 
 $permissoes = [
-    
+
     1=>
 [
     "Cadastrar"=>["cadastro_usuario.php","cadastro_perfil.php","cadastro_cliente.php","cadastro_fornecedor.php","cadastro_produto.php","cadastro_funcionario.php"],
@@ -81,7 +81,7 @@ $opcoes_menu = $permissoes[$id_perfil];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Usuário</title>
+    <title>Buscar Fornecedor</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
@@ -104,44 +104,46 @@ $opcoes_menu = $permissoes[$id_perfil];
             </ul>
         </nav>
 
-    <center><h2>Lista de Fornecedor</h2></center>
+    <center><h2>Lista de Fornecedores</h2></center>
 
-    <!-- FORMULARIO PARA BUSCAR USUARIOS -->
+    <!-- FORMULARIO PARA BUSCAR FORNECEDOR -->
 
     <form action="buscar_fornecedor.php" method="POST">
-        <label for="busca">Digite o ID ou NOME(opcional)</label>
+        <label for="busca">Digite o ID ou NOME do fornecedor(opcional)</label>
         <input type="text" id="busca" name="busca">
         <button type="submit" class="btn btn-primary">Pesquisar</button>
     </form>
 
-    <?php if(!empty($fornecedores)):?>
+    <?php if(!empty($usuarios)):?>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <center><table border="1" class ="table table-striped"> 
+        <center><table border="1" class="table table-bordered"> 
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
+                <th>Endereço</th>
+                <th>Telefone</th>
                 <th>Email</th>
                 <th>Contato</th>
-                <th>Endereço</th>
                 <th>Ações</th>
             </tr>
 
-            <?php foreach($fornecedores as $fornecedor): ?>
+            <?php foreach($usuarios as $usuario): ?>
                 <tr>
-                    <td><?=htmlspecialchars($fornecedor['id_fornecedor']) ?></td>
-                    <td><?=htmlspecialchars($fornecedor['nome_fornecedor']) ?></td> 
-                    <td><?=htmlspecialchars($fornecedor['email']) ?></td>
-                    <td><?=htmlspecialchars($fornecedor['contato']) ?></td>
-                    <td><?=htmlspecialchars($fornecedor['endereco']) ?></td>
+                    <td><?=htmlspecialchars($usuario['id_fornecedor']) ?></td>
+                    <td><?=htmlspecialchars($usuario['nome_fornecedor']) ?></td> 
+                    <td><?=htmlspecialchars($usuario['endereco']) ?></td>
+                    <td><?=htmlspecialchars($usuario['telefone']) ?></td>
+                    <td><?=htmlspecialchars($usuario['email']) ?></td>
+                    <td><?=htmlspecialchars($usuario['contato']) ?></td>
                     <td>
-                        <a class="btn btn-outline-warning"href="alterar_fornecedor.php?id=<?=htmlspecialchars($fornecedor['id_fornecedor'])?>">Alterar</a>
-                        <a class="btn btn-outline-danger" href="excluir_fornecedor.php?id=<?=htmlspecialchars($fornecedor['id_fornecedor'])?>"onclick="return confirm('Tem certeza que deseja excluir esse fornecedor?')">Excluir</a>
+                        <a href="alterar_fornecedor.php?id=<?=htmlspecialchars($usuario['id_fornecedor'])?>">Alterar</a>
+                        <a href="excluir_fornecedor.php?id=<?=htmlspecialchars($usuario['id_fornecedor'])?>"onclick="return confirm('Tem certeza que deseja excluir esse fornecedor?')">Excluir</a>
                     </td> 
                 </tr>
             <?php endforeach; ?>
         </table></center>
     <?php else: ?>
-        <center><p> Nenhum Fornecedor encontrado.</p></center>
+        <p> Nenhum fornecedor encontrado.</p>
     <?php endif; ?>
     <br>
     <center><a href="principal.php" class="btn btn-primary" >Voltar</a></center>
