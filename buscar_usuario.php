@@ -122,8 +122,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?php echo htmlspecialchars($usuario['email']) ?></td>
                 <td><?php echo htmlspecialchars($usuario['id_perfil']) ?></td>
                 <td>
-                    <a href="alterar_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>">Alterar</a>
-                    <a href="excluir_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>"onclick="return confirm('tem certeza que deseja excluir esse usuario')">excluir</a>
+                    <a class="btn btn-outline-warning" href="alterar_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>">Alterar</a>
+                    <a class="btn btn-outline-danger" href="excluir_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>"onclick="return confirm('tem certeza que deseja excluir esse usuario')">excluir</a>
                 </td>
             </tr>
         <?php endforeach; ?>
