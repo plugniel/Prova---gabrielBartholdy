@@ -57,3 +57,11 @@ function validarEmail() {
 
     return true;
 }
+function validarNomeFornecedor(){
+    let nome_fornecedor = document.getElementById("nome_fornecedor").value;
+
+    nome_fornecedor = nome.replace(/[0-9]/g, "");
+    document.getElementById("nome_fornecedor").value = nome_fornecedor;
+
+    return true;
+}

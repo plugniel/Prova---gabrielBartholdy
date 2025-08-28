@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cadastro fornecedor</title>
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js"></script>
     <script src="validacoes.js"></script>

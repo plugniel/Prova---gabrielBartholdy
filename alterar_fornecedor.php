@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] ==  "POST"){
 
     // Se o usuário não for encontrado, exibe um alerta 
     if(!$fornecedor) {
-        echo "<script>alert('Usuário não encontrado.');</script>";
+        echo "<script>alert('Fornecedor não encontrado.');</script>";
     }
 }
 }
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] ==  "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alterar Usuário</title>
+    <title>Alterar Fornecedor</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Certifique-se que o Javascript esta sendo carregado corretamente -->
     <script src="scripts.js"></script>
@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] ==  "POST"){
             </ul>
         </nav>
         <br>
-    <center><h2> Lista de Fornecedor </h2></center>
+    <center><h2>Alteração de Fornecedor </h2></center>
         <!-- Formulário para buscar usuário -->
         <form action="alterar_fornecedor.php" method="POST">
             <label for="busca_fornecedor"> Digite o ID ou Nome do fornecedor:</label>

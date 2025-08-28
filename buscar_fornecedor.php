@@ -116,7 +116,7 @@ $opcoes_menu = $permissoes[$id_perfil];
 
     <?php if(!empty($usuarios)):?>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <center><table border="1" class="table table-bordered"> 
+        <center><table border="1" class ="table table-striped"> 
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
@@ -136,8 +136,8 @@ $opcoes_menu = $permissoes[$id_perfil];
                     <td><?=htmlspecialchars($usuario['email']) ?></td>
                     <td><?=htmlspecialchars($usuario['contato']) ?></td>
                     <td>
-                        <a href="alterar_fornecedor.php?id=<?=htmlspecialchars($usuario['id_fornecedor'])?>">Alterar</a>
-                        <a href="excluir_fornecedor.php?id=<?=htmlspecialchars($usuario['id_fornecedor'])?>"onclick="return confirm('Tem certeza que deseja excluir esse fornecedor?')">Excluir</a>
+                        <a class = "btn btn-warning"href="alterar_fornecedor.php?id=<?=htmlspecialchars($usuario['id_fornecedor'])?>">Alterar</a>
+                        <a class = "btn btn-danger" href="excluir_fornecedor.php?id=<?=htmlspecialchars($usuario['id_fornecedor'])?>"onclick="return confirm('Tem certeza que deseja excluir esse fornecedor?')">Excluir</a>
                     </td> 
                 </tr>
             <?php endforeach; ?>

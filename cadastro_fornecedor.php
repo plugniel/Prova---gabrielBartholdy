@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cadastro de fornecedor</title>
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js"></script>
     <script src="validacoes.js"></script>
@@ -106,8 +106,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         <br>
     <center><h2>Cadastro de Fornecedor</h2></center>
     <form method="POST" action="cadastro_fornecedor.php">
-        <label for="nome">Nome Fornecedor:</label>
-        <input type="text" id="nome" name="nome" required onkeyup="validarNome()" required>
+        <label for="nome_fornecedor">Nome Fornecedor:</label>
+        <input type="text" id="nome_fornecedor" name="nome_fornecedor" required onkeyup="validarNomeFornecedor()">
         
         <label for="endereco">Endereço:</label>
         <input type="text" id="endereco" name="endereco" required>

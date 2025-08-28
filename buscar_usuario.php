@@ -132,8 +132,8 @@ $opcoes_menu = $permissoes[$id_perfil];
                     <td><?=htmlspecialchars($usuario['email']) ?></td>
                     <td><?=htmlspecialchars($usuario['id_perfil']) ?></td>
                     <td>
-                        <a href="alterar_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>">Alterar</a>
-                        <a href="excluir_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>"onclick="return confirm('Tem certeza que deseja excluir esse usuario?')">Excluir</a>
+                        <a class = "btn btn-warning" href="alterar_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>">Alterar</a>
+                        <a class = "btn btn-danger"href="excluir_usuario.php?id=<?=htmlspecialchars($usuario['id_usuario'])?>"onclick="return confirm('Tem certeza que deseja excluir esse usuario?')">Excluir</a>
                     </td> 
                 </tr>
             <?php endforeach; ?>
